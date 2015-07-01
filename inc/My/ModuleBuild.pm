@@ -11,6 +11,11 @@ use Devel::CheckLib;
 
 sub new {
   my($class, %args) = @_;
+
+  if($^O eq 'MSWin32') {
+    print "Sorry, your Operating System is not supported\n";
+    exit;
+  }
   
   $args{alien_name} = 'bz2';
   $args{alien_build_commands} = [
