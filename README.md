@@ -28,6 +28,16 @@ Returns the C compiler flags.
 
 Returns the linker flags.
 
+# SEE ALSO
+
+- [Alien::bz2](https://metacpan.org/pod/Alien::bz2)
+
+    Another libbz2 [Alien](https://metacpan.org/pod/Alien) module, but not implemented with [Alien:Base](Alien:Base).
+
+- [Compress::Bzip2](https://metacpan.org/pod/Compress::Bzip2)
+- [Compress::Raw::Bzip2](https://metacpan.org/pod/Compress::Raw::Bzip2)
+- [IO::Compress::Bzip2](https://metacpan.org/pod/IO::Compress::Bzip2)
+
 # AUTHOR
 
 Graham Ollis <plicease@cpan.org>

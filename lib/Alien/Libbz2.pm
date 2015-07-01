@@ -34,6 +34,22 @@ Returns the C compiler flags.
 
 Returns the linker flags.
 
+=head1 SEE ALSO
+
+=over 4
+
+=item L<Alien::bz2>
+
+Another libbz2 L<Alien> module, but not implemented with L<Alien:Base>.
+
+=item L<Compress::Bzip2>
+
+=item L<Compress::Raw::Bzip2>
+
+=item L<IO::Compress::Bzip2>
+
+=back
+
 =cut
 
 1;
