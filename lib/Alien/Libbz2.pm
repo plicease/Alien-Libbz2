@@ -36,9 +36,4 @@ Returns the linker flags.
 
 =cut
 
-sub libs {
-  my($class) = @_;
-  $class->install_type eq 'system' ? '-lbz2' : $class->SUPER::libs;
-}
-
 1;
