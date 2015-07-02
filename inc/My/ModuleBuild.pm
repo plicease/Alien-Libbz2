@@ -7,35 +7,6 @@ use parent 'Alien::Base::ModuleBuild';
 use Config;
 use ExtUtils::CChecker;
 use Capture::Tiny qw( capture );
-use Devel::CheckLib;
-
-sub new {
-  my($class, %args) = @_;
-
-  if($^O eq 'MSWin32') {
-    print "Sorry, your Operating System is not supported\n";
-    exit;
-  }
-  
-  $args{alien_name} = 'bz2';
-  $args{alien_build_commands} = [
-    [ $Config{make}, 'all', 'PREFIX=%s' ],
-  ];
-  $args{alien_install_commands} = [
-    [ $Config{make}, 'install', 'PREFIX=%s' ],
-  ];
-  $args{alien_repository} = {
-    protocol       => 'http',
-    host           => 'www.bzip.org',
-    location       => '/1.0.6/',
-    exact_filename => "bzip2-1.0.6.tar.gz",
-  };
-  $args{alien_provides_libs} = '-lbz2';
-  
-  my $self = $class->SUPER::new(%args);
-  
-  $self;
-}
 
 sub alien_check_installed_version {
   my($self) = @_;

@@ -7,6 +7,7 @@ pod_spelling_system:
     - bz2
     - cflags
     - libbz2
+    - libs
 
 pod_coverage:
   skip: 0

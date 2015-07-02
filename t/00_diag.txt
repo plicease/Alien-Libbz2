@@ -1,7 +1,6 @@
 Alien::Base
-Devel::CheckLib
 ExtUtils::CChecker
-Module::Build
+File::ShareDir
 Test::CChecker
 Test::More
 parent
