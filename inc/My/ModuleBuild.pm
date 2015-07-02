@@ -25,7 +25,8 @@ sub alien_check_installed_version {
 
   my($version, undef, $ok) = capture {  
   
-    my $code = <<EOF;
+    $cc->try_compile_run(
+      source => <<EOF,
 #include <stdio.h>
 #include <bzlib.h>
 
@@ -36,9 +37,6 @@ main(int argc, char *argv[])
   return 0;
 }
 EOF
-  
-    my $ok = $cc->try_compile_run(
-      source => $code,
     );
   };
   
