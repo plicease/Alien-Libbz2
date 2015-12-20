@@ -1,4 +1,4 @@
-# Alien::Libbz2
+# Alien::Libbz2 [![Build Status](https://secure.travis-ci.org/Perl5-Alien/Alien-Libbz2.png)](http://travis-ci.org/Perl5-Alien/Alien-Libbz2)
 
 Build and make available bz2
 
@@ -40,7 +40,7 @@ Returns the linker flags.
 
 # AUTHOR
 
-Graham Ollis <plicease@cpan.org>
+Graham Ollis &lt;plicease@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
