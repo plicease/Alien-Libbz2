@@ -14,10 +14,8 @@ $modules{$_} = $_ for qw(
   Alien::Base::ModuleBuild
   ExtUtils::CChecker
   File::ShareDir
-  Test::Alien
   Test::CChecker
   Test::More
-  Test::Stream
   parent
 );
 
