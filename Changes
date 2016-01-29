@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Use Alien::Base::ModuleBuild as configure requires
+    instead of Alien::Base
 
 0.02      2015-07-13 09:31:54 -0400
   - First cpan release!
