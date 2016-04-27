@@ -14,7 +14,8 @@ $modules{$_} = $_ for qw(
   Alien::Base::ModuleBuild
   ExtUtils::CChecker
   File::ShareDir
-  Test::CChecker
+  Test2::Bundle::Extended
+  Test::Alien
   Test::More
   parent
 );

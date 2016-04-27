@@ -1,24 +1,32 @@
 use strict;
-use warnings;
-use Test::More;
-use Test::CChecker;
+use Test2::Bundle::Extended;
+use Test::Alien 0.05;
 use Alien::Libbz2;
 
-plan tests => 1;
+alien_ok 'Alien::Libbz2';
+my $xs = do { local $/; <DATA> };
+xs_ok $xs, with_subtest {
+  my($module) = @_;
+  ok $module->version;
+  note 'version = ', $module->version;
+};
 
-compile_output_to_note;
+done_testing;
 
-compile_with_alien 'Alien::Libbz2';
+__DATA__
 
-compile_run_ok <<C_CODE, "basic compile test";
+#include "EXTERN.h"
+#include "perl.h"
+#include "XSUB.h"
 #include <bzlib.h>
 
-int
-main(int argc, char *argv[])
+const char *
+version(const char *class)
 {
-  const char *version;
-  version = BZ2_bzlibVersion();
-  return 0;
+  return BZ2_bzlibVersion();
 }
-C_CODE
 
+MODULE = TA_MODULE PACKAGE = TA_MODULE
+
+const char *version(class);
+    const char *class;
