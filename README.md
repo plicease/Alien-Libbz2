@@ -28,6 +28,14 @@ Returns the C compiler flags.
 
 Returns the linker flags.
 
+# HELPERS
+
+## bzip2
+
+    %{bzip2}
+
+Returns the name of the bzip2 command.  Usually just `bzip2`.
+
 # SEE ALSO
 
 - [Alien::bz2](https://metacpan.org/pod/Alien::bz2)

@@ -34,6 +34,24 @@ Returns the C compiler flags.
 
 Returns the linker flags.
 
+=head1 HELPERS
+
+=head2 bzip2
+
+ %{bzip2}
+
+Returns the name of the bzip2 command.  Usually just C<bzip2>.
+
+=cut
+
+sub alien_helper
+{
+  return {
+    bzip2 => sub { 'bzip2' },
+  };
+}
+
+
 =head1 SEE ALSO
 
 =over 4
