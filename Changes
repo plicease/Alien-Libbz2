@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.04      2017-01-18 15:36:03 -0500
   - Added %{bzip2} helper
 
 0.03      2016-01-28 21:43:49 -0500
