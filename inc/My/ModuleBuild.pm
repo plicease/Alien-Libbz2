@@ -13,6 +13,17 @@ if($^O eq 'MSWin32') {
   exit;
 }
 
+sub new
+{
+  my($class, %args) = @_;
+  
+  $args{alien_build_commands} = [
+    [ '%{make}', 'all', "CC=$Config{cc}", "CFLAGS=$Config{cccdlflags} $Config{optimize}" ]
+  ];
+  
+  $class->SUPER::new(%args);
+}
+
 sub alien_check_installed_version {
   my($self) = @_;
   
