@@ -3,7 +3,7 @@ package Alien::Libbz2;
 use strict;
 use warnings;
 use 5.008001;
-use parent 'Alien::Base';
+use base 'Alien::Base2';
 
 # ABSTRACT: Build and make available bz2
 # VERSION

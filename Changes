@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Migrate from Alien::Base::ModuleBuild to Alien::Build for installer
 
 0.05      2017-01-26 18:52:03 -0500
   - Use -fPIC (or equivalent) when building libbz2.a for share

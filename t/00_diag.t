@@ -11,16 +11,26 @@ my $post_diag;
 
 $modules{$_} = $_ for qw(
   Alien::Base
-  Alien::Base::ModuleBuild
-  ExtUtils::CChecker
-  File::ShareDir
+  Alien::Base2
+  Alien::Build::MM
+  ExtUtils::CBuilder
+  ExtUtils::MakeMaker
+  IPC::Cmd
   Test2::Suite
   Test::Alien
   Test::More
-  parent
 );
 
-
+$post_diag = sub {
+  require Alien::Libbz2;
+  diag "version       = ", Alien::Libbz2->version;
+  diag "cflags        = ", Alien::Libbz2->cflags;
+  diag "cflags_static = ", Alien::Libbz2->cflags_static;
+  diag "libs          = ", Alien::Libbz2->libs;
+  diag "libs_static   = ", Alien::Libbz2->libs_static;
+  diag "bin_dir       = ", $_ for Alien::Libbz2->bin_dir;
+  diag "dist_dir      = ", Alien::Libbz2->dist_dir;
+};
 
 my @modules = sort keys %modules;
 
