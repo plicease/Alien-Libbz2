@@ -1,6 +1,6 @@
 use strict;
 use Test2::Bundle::Extended;
-use Test::Alien 0.05;
+use Test::Alien 0.12;
 use Alien::Libbz2;
 
 alien_ok 'Alien::Libbz2';
