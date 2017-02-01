@@ -37,6 +37,16 @@ share {
       path('Makefile')->edit_lines(sub {
         s/(\Qchmod a+x\E.*?(bzip2|bunzip2|bzcat|bzip2recover))$/ $1 . '$(EXE)' /eg;
       });
+      path('bzlib.h')->edit_lines(sub {
+        if(/WINAPI func/)
+        {
+          $_ = join('', "#   ifdef BZ_STATIC\n",
+                        "#   define BZ_API(func) func\n",
+                        "#   else\n",
+                        $_,
+                        "#   endif\n");
+        }
+      });
     };
   }
   
@@ -50,12 +60,13 @@ share {
     },
   ];
   gather sub {
-    my($build) =@_;
+    my($build) = @_;
     my $prefix = $build->runtime_prop->{prefix};
-    $build->runtime_prop->{cflags}        = "-I$prefix/include";
-    $build->runtime_prop->{cflags_static} = "-I$prefix/include";
-    $build->runtime_prop->{libs}          = "-L$prefix/lib -lbz2";
-    $build->runtime_prop->{libs_static}   = "-L$prefix/lib -lbz2";
+    $build->runtime_prop->{cflags}        = "-I$prefix/include ";
+    $build->runtime_prop->{cflags_static} = "-I$prefix/include ";
+    $build->runtime_prop->{cflags_static} .= ' -DBZ_STATIC=1' if $^O eq 'MSWin32';
+    $build->runtime_prop->{libs}          = "-L$prefix/lib -lbz2 ";
+    $build->runtime_prop->{libs_static}   = "-L$prefix/lib -lbz2 ";
   };
 
 };
