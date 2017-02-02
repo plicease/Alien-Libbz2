@@ -9,6 +9,7 @@ pod_spelling_system:
     - libbz2
     - libs
     - bzip
+    - dlls
 
 pod_coverage:
   skip: 0
