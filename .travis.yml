@@ -25,3 +25,6 @@ script:
 env:
   global:
     - PERL_CPANM_OPT='--mirror https://cpan.metacpan.org/ --mirror-only'
+  matrix:
+    - ALIEN_INSTALL_TYPE=share
+    - ALIEN_INSTALL_TYPE=system
