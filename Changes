@@ -3,6 +3,7 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
   - Fold Alien::bz2 into this distribution as a compatability
     layer over Alien::Libbz2
+  - Build .so files if possible
 
 0.08      2017-02-01 11:59:27 -0500
   - Support for Strawberry Perl
