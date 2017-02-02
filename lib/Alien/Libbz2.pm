@@ -65,7 +65,7 @@ sub config {
 
 =item L<Alien::bz2>
 
-Another libbz2 L<Alien> module, but not implemented with L<Alien:Base>.
+Another libbz2 L<Alien> module, but not implemented with L<Alien::Base>.
 
 =item L<Compress::Bzip2>
 
