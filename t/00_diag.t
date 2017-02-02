@@ -29,6 +29,7 @@ $post_diag = sub {
   diag "libs_static   = ", Alien::Libbz2->libs_static;
   diag "bin_dir       = ", $_ for Alien::Libbz2->bin_dir;
   diag "dist_dir      = ", Alien::Libbz2->dist_dir;
+  diag "install_type  = ", Alien::Libbz2->install_type;
 };
 
 my @modules = sort keys %modules;

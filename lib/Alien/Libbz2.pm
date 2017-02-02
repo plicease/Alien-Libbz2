@@ -51,6 +51,13 @@ sub alien_helper
   };
 }
 
+# TODO: this should eventually be correctly handled by
+# Alien::Build
+sub config {
+  my($class, $key) = @_;
+  return 'bz2' if $key eq 'name' || $key eq 'ffi_name';
+  return $class->SUPER::config($key);
+}
 
 =head1 SEE ALSO
 

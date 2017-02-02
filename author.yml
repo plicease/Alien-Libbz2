@@ -17,4 +17,5 @@ pod_coverage:
   # for either Class or method.
   private:
     - #alien_helper
+    - #config
 

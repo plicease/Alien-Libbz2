@@ -1,5 +1,6 @@
 use alienfile;
 use Path::Tiny qw( path );
+use File::Glob qw( bsd_glob );
 
 plugin 'Probe::CBuilder' => (
   libs    => '-lbz2',
@@ -49,6 +50,25 @@ share {
       });
     };
   }
+
+  my @build_dll;
+  
+  if($^O !~ /^(MSWin32|cygwin|msys)$/)
+  {
+    push @build_dll, [ '%{make}', -f => 'Makefile-libbz2_so', sub {
+    
+      my($build, $det) = @_;
+      
+      if($det->{exit} == 0)
+      {
+        my @dlls = grep { ! -l $_ } bsd_glob 'libbz2*.so*';
+        my $dest = path($build->install_prop->{prefix})->child('dynamic');
+        $dest->mkpath;
+        path($_)->copy($dest->child($_))
+          for @dlls;
+      }
+    }];
+  }
   
   build [
     [ '%{make}', 'all', "CC=%{perl.config.cc}", "CFLAGS=%{perl.config.cccdlflags} %{perl.config.optimize}", ],
@@ -58,6 +78,7 @@ share {
       my($version) = path(".")->absolute->basename =~ /([0-9\.]+)$/;
       $build->runtime_prop->{version} = $version;
     },
+    @build_dll,
   ];
   gather sub {
     my($build) = @_;
