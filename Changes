@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.18      2017-02-02 15:18:24 -0500
   - Fold Alien::bz2 into this distribution as a compatability
     layer over Alien::Libbz2
   - Build .so files if possible
