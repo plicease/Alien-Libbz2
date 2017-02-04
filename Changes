@@ -2,6 +2,9 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.19      2017-02-04 11:48:19 -0500
+  - Require Alien::Build 0.08 for bugfixes
+
 0.18      2017-02-02 15:18:24 -0500
   - Fold Alien::bz2 into this distribution as a compatability
     layer over Alien::Libbz2
