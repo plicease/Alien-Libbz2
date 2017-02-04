@@ -12,6 +12,7 @@ my $post_diag;
 $modules{$_} = $_ for qw(
   Alien::Base2
   Alien::Build::MM
+  Alien::patch
   ExtUtils::CBuilder
   ExtUtils::MakeMaker
   IPC::Cmd

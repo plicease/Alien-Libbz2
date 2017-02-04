@@ -6,6 +6,9 @@ use Config;
 my $windows_msvc = $^O eq 'MSWin32' && $Config{cc} =~ /cl(\.exe)?$/;
 my $windows_gcc  = $^O eq 'MSWin32' && $Config{cc} !~ /cl(\.exe)?$/;
 
+meta_prop->{my_makefile} = 'Makefile';
+meta_prop->{my_makefile} = 'makefile.msc' if $windows_msvc;
+
 plugin 'Probe::CBuilder' => (
   libs    => '-lbz2',
   version => qr/version = '(.*?)[,']/,
@@ -28,59 +31,21 @@ plugin 'Probe::CommandLine' => (
 
 share {
 
-  plugin 'Build::MSYS' => ();
+  plugin 'Build::MSYS' => () unless $windows_msvc;
+
   plugin 'Download' => (
     url     => 'http://www.bzip.org/downloads.html',
     version => qr/^bzip2-([0-9\.]+)tar.gz$/,
   );
   plugin Extract => 'tar.gz';
   
-  if($windows_gcc)
-  {
-    requires 'Path::Tiny' => '0.077';
-    patch sub {
-      path('Makefile')->edit_lines(sub {
-        s/(\Qchmod a+x\E.*?(bzip2|bunzip2|bzcat|bzip2recover))$/ $1 . '$(EXE)' /eg;
-      });
-      path('bzlib.h')->edit_lines(sub {
-        if(/WINAPI func/)
-        {
-          $_ = join('', "#   ifdef BZ_STATIC\n",
-                        "#   define BZ_API(func) func\n",
-                        "#   else\n",
-                        $_,
-                        "#   endif\n");
-        }
-      });
-    };
-  }
-
+  patch [ '%{patch} -p1 < %{alien.install.patch}/bzip2-1.0.6.diff' ];
+  
   my @build;
   
-  if($windows_msvc)
-  {
-    push @build, 
-      [ 'nmake', -f => 'makefile.msc' ],
-      sub {
-        my($build) = @_;
-        my $dest = path($build->install_prop->{prefix});
-        my $bin  = $dest->child('bin');
-        my $lib  = $dest->child('lib');
-        my $inc  = $dest->child('include');
-        
-        $_->mkpath for ($bin,$lib,$inc);
-        
-        path($_)->copy($bin->child($_)) for bsd_glob '*.exe';
-        path($_)->copy($lib->child($_)) for bsd_glob '*.lib';
-        path($_)->copy($inc->child($_)) for 'bzlib.h';
-      };
-  }
-  else
-  {
-    push @build,
-      [ '%{make}', 'all', "CC=%{perl.config.cc}", "CFLAGS=%{perl.config.cccdlflags} %{perl.config.optimize}", ],
-      [ '%{make}', 'install', 'PREFIX=%{alien.install.prefix}', 'EXE=%{perl.config.exe_ext}' ];
-  }
+  push @build,
+    [ '%{make}', -f => '%{alien.meta.my_makefile}', 'all', "CC=%{perl.config.cc}", "CFLAGS=%{perl.config.cccdlflags} %{perl.config.optimize}", ],
+    [ '%{make}', -f => '%{alien.meta.my_makefile}', 'install', 'PREFIX=%{alien.install.prefix}', 'EXE=%{perl.config.exe_ext}' ];
 
   push @build, sub {
     my($build) = @_;
@@ -116,7 +81,6 @@ share {
 
     if($windows_msvc)
     {
-      $build->runtime_prop->{cflags_static} .= ' -DBZ_STATIC=1' if $windows_gcc;
       $build->runtime_prop->{libs}          = "-LIBPATH:$prefix/lib libbz2.lib ";
       $build->runtime_prop->{libs_static}   = "-LIBPATH:$prefix/lib libbz2.lib ";
     }
