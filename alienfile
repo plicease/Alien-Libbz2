@@ -3,11 +3,9 @@ use Path::Tiny qw( path );
 use File::Glob qw( bsd_glob );
 use Config;
 
-my $windows_msvc = $^O eq 'MSWin32' && $Config{cc} =~ /cl(\.exe)?$/;
-my $windows_gcc  = $^O eq 'MSWin32' && $Config{cc} !~ /cl(\.exe)?$/;
+my $compiler_type = meta_prop->{platform}->{compiler_type};
 
-meta_prop->{my_makefile} = 'Makefile';
-meta_prop->{my_makefile} = 'makefile.msc' if $windows_msvc;
+meta_prop->{my_makefile} = $compiler_type eq 'microsoft' ? 'makefile.msc' : 'Makefile';
 
 plugin 'Probe::CBuilder' => (
   libs    => '-lbz2',
@@ -31,7 +29,7 @@ plugin 'Probe::CommandLine' => (
 
 share {
 
-  plugin 'Build::MSYS' => () unless $windows_msvc;
+  plugin 'Build::MSYS' => () unless $compiler_type eq 'microsoft';
 
   plugin 'Download' => (
     url     => 'http://www.bzip.org/downloads.html',
@@ -79,14 +77,14 @@ share {
     $build->runtime_prop->{cflags}        = "-I$prefix/include ";
     $build->runtime_prop->{cflags_static} = "-I$prefix/include ";
 
-    if($windows_msvc)
+    if($compiler_type eq 'microsoft')
     {
       $build->runtime_prop->{libs}          = "-LIBPATH:$prefix/lib libbz2.lib ";
       $build->runtime_prop->{libs_static}   = "-LIBPATH:$prefix/lib libbz2.lib ";
     }
     else
     {
-      $build->runtime_prop->{cflags_static} .= ' -DBZ_STATIC=1' if $windows_gcc;
+      $build->runtime_prop->{cflags_static} .= ' -DBZ_STATIC=1';
       $build->runtime_prop->{libs}          = "-L$prefix/lib -lbz2 ";
       $build->runtime_prop->{libs_static}   = "-L$prefix/lib -lbz2 ";
     }
