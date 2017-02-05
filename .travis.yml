@@ -6,6 +6,7 @@ install:
   - perlbrew list
   - dzil authordeps --missing | cpanm -n
   - dzil listdeps --missing | cpanm -n
+  - cpanm Alien::patch
 
 perl:
   - "5.14"
