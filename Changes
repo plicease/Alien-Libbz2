@@ -2,6 +2,9 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.21      2017-02-08 07:59:42 -0500
+  - Require Alien::Build 0.11 for bugfixes
+
 0.20      2017-02-04 17:32:30 -0500
   - use Alien::patch for more reliable builds
   - FFI testing is back on for platforms that
