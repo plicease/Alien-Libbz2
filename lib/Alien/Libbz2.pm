@@ -7,13 +7,7 @@ use base 'Alien::Base';
 
 # ABSTRACT: Build and make available bz2
 # VERSION
-
-=head1 SYNOPSIS
-
- use Alien::Libbz2;
- 
- my $cflags = Alien::Libbz2->cflags;
- my $libs   = ALien::Libbz2->libs;
+# ALIEN SYNOPSIS
 
 =head1 DESCRIPTION
 
