@@ -4,9 +4,10 @@ sudo: false
 install:
   - ./maint/travis-install-alienbuild
   - perlbrew list
+  - cpanm -n App::af
+  - af missing | cpanm
   - dzil authordeps --missing | cpanm -n
   - dzil listdeps --missing | cpanm -n
-  - cpanm Alien::patch
 
 perl:
   - "5.14"
@@ -16,16 +17,12 @@ perl:
   - "5.22"
   - "5.24"
 
-env:
-  - ALIEN_FORCE=0
-  - ALIEN_FORCE=1
-
 script:
   - dzil test -v
 
 env:
   global:
-    - PERL_CPANM_OPT='--mirror https://cpan.metacpan.org/ --mirror-only'
+    - ALIEN_BASE_NO_ABMB=1
   matrix:
     - ALIEN_INSTALL_TYPE=share
     - ALIEN_INSTALL_TYPE=system
