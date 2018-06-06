@@ -132,7 +132,7 @@ sub libs
  my @dlls = Alien::bz2->dlls;
 
 Returns a list of dynamic libraries (usually a list of just one library)
-that make up bz2.  This can be used for L<FFI::Raw>.
+that make up bz2.  This can be used for L<FFI::Platypus>.
 
 Returns just the first dynamic library found in scalar context.
 

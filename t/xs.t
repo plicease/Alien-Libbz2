@@ -1,5 +1,4 @@
-use strict;
-use Test2::Bundle::Extended;
+use Test2::V0 -no_srand => 1;
 use Test::Alien 0.12;
 use Alien::Libbz2;
 

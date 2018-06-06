@@ -51,7 +51,7 @@ In your script or module:
     use Alien::Libbz2;
     use Env qw( @PATH );
     
-    unshift @ENV, Alien::Libbz2->bin_dir;
+    unshift @PATH, Alien::Libbz2->bin_dir;
 
 # DESCRIPTION
 
