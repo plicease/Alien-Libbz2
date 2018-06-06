@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Require Alien::Build 1.25 and friends for bugfixes
 
 0.22      2017-03-02 06:37:32 +1100
   - Remove dep on Alien::Base2
