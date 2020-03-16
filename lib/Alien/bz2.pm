@@ -62,7 +62,7 @@ and install it.
 If you set the environment variable C<ALIEN_BZ2> to 'share', this
 distribution will ignore any system bz2 found, and build from
 source instead.  This may be desirable if your operating system comes
-with a very old version of bz2 and an upgrade path for the 
+with a very old version of bz2 and an upgrade path for the
 system bz2 is not possible.
 
 This distribution also honors the C<ALIEN_FORCE> environment variable used

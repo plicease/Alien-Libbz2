@@ -64,6 +64,7 @@ This [Alien](https://metacpan.org/pod/Alien) module provides the necessary compi
 for using libbz2 in XS.
 
 # METHODS
+
 ## bin\_dir
 
 ```perl
