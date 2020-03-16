@@ -102,7 +102,7 @@ scalar context.
 sub cflags
 {
   my $cflags = Alien::Libbz2->cflags;
-  return $cflags if ! wantarray;
+  return $cflags if ! wantarray;  ## no critic(Freenode::Wantarray)
   require Text::ParseWords;
   Text::ParseWords::shellwords($cflags);
 }
@@ -122,7 +122,7 @@ scalar context.
 sub libs
 {
   my $libs = Alien::Libbz2->libs;
-  return $libs if ! wantarray;
+  return $libs if ! wantarray;  ## no critic(Freenode::Wantarray)
   require Text::ParseWords;
   Text::ParseWords::shellwords($libs);
 }
@@ -141,7 +141,7 @@ Returns just the first dynamic library found in scalar context.
 sub dlls
 {
   my @dlls = Alien::Libbz2->dynamic_libs;
-  wantarray ? @dlls : $dlls[0];
+  wantarray ? @dlls : $dlls[0]; ## no critic(Freenode::Wantarray)
 }
 
 =head2 version
