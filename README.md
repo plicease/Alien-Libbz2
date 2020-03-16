@@ -64,6 +64,14 @@ This [Alien](https://metacpan.org/pod/Alien) module provides the necessary compi
 for using libbz2 in XS.
 
 # METHODS
+## bin\_dir
+
+```perl
+my @dirs = Alien::Libbz2->bin_dir;
+```
+
+Returns a list of directories that need to be added to `PATH` in order to use
+the command line tools.
 
 ## cflags
 
