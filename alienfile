@@ -7,10 +7,29 @@ my $compiler_type = meta_prop->{platform}->{compiler_type};
 
 meta_prop->{my_makefile} = $compiler_type eq 'microsoft' ? 'makefile.msc' : 'Makefile';
 
-plugin 'Probe::CBuilder' => (
-  libs    => '-lbz2',
-  version => qr/version = '(.*?)[,']/,
-  program => q{
+if($compiler_type eq 'microsoft')
+{
+  plugin 'Probe::Vcpkg' => (
+    name     => 'bzip2',
+    ffi_name => 'bz2',
+  );
+
+  meta->after_hook(
+    gather_system => sub {
+      my($build) = @_;
+      require Win32::Vcpkg;
+      my $root = Win32::Vcpkg->root;
+      my $triplet = Win32::Vcpkg->perl_triplet;
+      $build->runtime_prop->{my_bin_dir} = path($root)->child('installed', $triplet, 'tools', 'bzip2')->stringify;
+    },
+  );
+}
+else
+{
+  plugin 'Probe::CBuilder' => (
+    libs    => '-lbz2',
+    version => qr/version = '(.*?)[,']/,
+    program => q{
 #include <bzlib.h>
 #include <stdio.h>
 
@@ -20,12 +39,13 @@ int main(int argc, char *argv[])
   return 0;
 }
 },
-);
+  );
 
-plugin 'Probe::CommandLine' => (
-  command   => 'bzip2',
-  secondary => 1,
-);
+  plugin 'Probe::CommandLine' => (
+    command   => 'bzip2',
+    secondary => 1,
+  );
+}
 
 share {
 
@@ -35,11 +55,11 @@ share {
     url     => 'https://sourceforge.net/projects/bzip2/files/latest/download',
   );
   plugin Extract => 'tar.gz';
-  
+
   patch [ '%{patch} -p1 < %{.install.patch}/bzip2-1.0.6.diff' ];
-  
+
   my @build;
-  
+
   push @build,
     [ '%{make}', -f => '%{.meta.my_makefile}', 'all', "CC=%{perl.config.cc}", "CFLAGS=%{perl.config.cccdlflags} %{perl.config.optimize}", ],
     [ '%{make}', -f => '%{.meta.my_makefile}', 'install', 'PREFIX=%{.install.prefix}', 'EXE=%{perl.config.exe_ext}' ];
@@ -49,13 +69,13 @@ share {
     my($version) = path(".")->absolute->basename =~ /([0-9\.]+)$/;
     $build->runtime_prop->{version} = $version;
   };
-  
+
   if($^O !~ /^(MSWin32|cygwin|msys)$/)
   {
     push @build, [ '%{make}', -f => 'Makefile-libbz2_so', sub {
-    
+
       my($build, $det) = @_;
-      
+
       if($det->{exit} == 0)
       {
         my @dlls = grep { ! -l $_ } bsd_glob 'libbz2*.so*';
@@ -66,7 +86,7 @@ share {
       }
     }];
   }
-  
+
   build \@build;
 
   gather sub {
