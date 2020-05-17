@@ -4,54 +4,59 @@ Build and make available bz2
 
 # SYNOPSIS
 
-In your Build.PL:
-
-    use Module::Build;
-    use Alien::Libbz2;
-    my $builder = Module::Build->new(
-      ...
-      configure_requires => {
-        'Alien::Libbz2' => '0',
-        ...
-      },
-      extra_compiler_flags => Alien::Libbz2->cflags,
-      extra_linker_flags   => Alien::Libbz2->libs,
-      ...
-    );
-    
-    $build->create_build_script;
-
 In your Makefile.PL:
 
-    use ExtUtils::MakeMaker;
-    use Config;
-    use Alien::Libbz2;
-    
-    WriteMakefile(
-      ...
-      CONFIGURE_REQUIRES => {
-        'Alien::Libbz2' => '0',
-      },
-      CCFLAGS => Alien::Libbz2->cflags . " $Config{ccflags}",
-      LIBS    => [ Alien::Libbz2->libs ],
-      ...
-    );
+```perl
+use ExtUtils::MakeMaker;
+use Alien::Base::Wrapper ();
+
+WriteMakefile(
+  Alien::Base::Wrapper->new('Alien::Libbz2')->mm_args2(
+    # MakeMaker args
+    NAME => 'Kafka::Librd',
+    ...
+  ),
+);
+```
+
+In your Build.PL:
+
+```perl
+use Module::Build;
+use Alien::Base::Wrapper qw( Alien::Libbz2 !export );
+
+my $builder = Module::Build->new(
+  ...
+  configure_requires => {
+    'Alien::Libbz2' => '0',
+    ...
+  },
+  Alien::Base::Wrapper->mb_args,
+  ...
+);
+
+$build->create_build_script;
+```
 
 In your [FFI::Platypus](https://metacpan.org/pod/FFI::Platypus) script or module:
 
-    use FFI::Platypus;
-    use Alien::Libbz2;
-    
-    my $ffi = FFI::Platypus->new(
-      lib => [ Alien::Libbz2->dynamic_libs ],
-    );
+```perl
+use FFI::Platypus;
+use Alien::Libbz2;
+
+my $ffi = FFI::Platypus->new(
+  lib => [ Alien::Libbz2->dynamic_libs ],
+);
+```
 
 In your script or module:
 
-    use Alien::Libbz2;
-    use Env qw( @PATH );
-    
-    unshift @PATH, Alien::Libbz2->bin_dir;
+```perl
+use Alien::Libbz2;
+use Env qw( @PATH );
+
+unshift @PATH, Alien::Libbz2->bin_dir;
+```
 
 # DESCRIPTION
 
@@ -60,15 +65,28 @@ for using libbz2 in XS.
 
 # METHODS
 
+## bin\_dir
+
+```perl
+my @dirs = Alien::Libbz2->bin_dir;
+```
+
+Returns a list of directories that need to be added to `PATH` in order to use
+the command line tools.
+
 ## cflags
 
-    my $cflags = Alien::Libbz2->cflags;
+```perl
+my $cflags = Alien::Libbz2->cflags;
+```
 
 Returns the C compiler flags.
 
 ## libs
 
-    my $libs = Alien::Libbz2->libs;
+```perl
+my $libs = Alien::Libbz2->libs;
+```
 
 Returns the linker flags.
 
@@ -76,7 +94,9 @@ Returns the linker flags.
 
 ## bzip2
 
-    %{bzip2}
+```
+%{bzip2}
+```
 
 Returns the name of the bzip2 command.  Usually just `bzip2`.
 

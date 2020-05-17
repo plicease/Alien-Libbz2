@@ -62,7 +62,7 @@ and install it.
 If you set the environment variable C<ALIEN_BZ2> to 'share', this
 distribution will ignore any system bz2 found, and build from
 source instead.  This may be desirable if your operating system comes
-with a very old version of bz2 and an upgrade path for the 
+with a very old version of bz2 and an upgrade path for the
 system bz2 is not possible.
 
 This distribution also honors the C<ALIEN_FORCE> environment variable used
@@ -102,7 +102,7 @@ scalar context.
 sub cflags
 {
   my $cflags = Alien::Libbz2->cflags;
-  return $cflags if ! wantarray;
+  return $cflags if ! wantarray;  ## no critic(Freenode::Wantarray)
   require Text::ParseWords;
   Text::ParseWords::shellwords($cflags);
 }
@@ -122,7 +122,7 @@ scalar context.
 sub libs
 {
   my $libs = Alien::Libbz2->libs;
-  return $libs if ! wantarray;
+  return $libs if ! wantarray;  ## no critic(Freenode::Wantarray)
   require Text::ParseWords;
   Text::ParseWords::shellwords($libs);
 }
@@ -141,7 +141,7 @@ Returns just the first dynamic library found in scalar context.
 sub dlls
 {
   my @dlls = Alien::Libbz2->dynamic_libs;
-  wantarray ? @dlls : $dlls[0];
+  wantarray ? @dlls : $dlls[0]; ## no critic(Freenode::Wantarray)
 }
 
 =head2 version
