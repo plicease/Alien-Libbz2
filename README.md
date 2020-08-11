@@ -1,4 +1,4 @@
-# Alien::Libbz2 [![Build Status](https://secure.travis-ci.org/Perl5-Alien/Alien-Libbz2.png)](http://travis-ci.org/Perl5-Alien/Alien-Libbz2)
+# Alien::Libbz2 [![Build Status](https://travis-ci.org/PerlAlien/Alien-Libbz2.svg)](http://travis-ci.org/PerlAlien/Alien-Libbz2)
 
 Build and make available bz2
 
@@ -13,7 +13,7 @@ use Alien::Base::Wrapper ();
 WriteMakefile(
   Alien::Base::Wrapper->new('Alien::Libbz2')->mm_args2(
     # MakeMaker args
-    NAME => 'Kafka::Librd',
+    NAME => 'My::XS',
     ...
   ),
 );
