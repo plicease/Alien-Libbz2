@@ -1,4 +1,4 @@
-# Alien::Libbz2 [![Build Status](https://travis-ci.org/PerlAlien/Alien-Libbz2.svg)](http://travis-ci.org/PerlAlien/Alien-Libbz2)
+# Alien::Libbz2 ![linux](https://github.com/PerlAlien/Alien-Libbz2/workflows/linux/badge.svg)
 
 Build and make available bz2
 
